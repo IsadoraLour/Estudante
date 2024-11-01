@@ -1,4 +1,4 @@
-﻿
+﻿using Dapper;
 using System.Data.SQLite;
 
 
@@ -7,14 +7,14 @@ namespace Estudante
     public class InicializadorBD
     {
 
-        private const string ConnectionString = "Data Source=Escola.db";
+       
         public static void Inicializar()
         {
-            using (var connection = new SQLiteConnection(ConnectionString))
-            {
+            using var connection = new SQLiteConnection("Data Source=Escola.db");
+            
 
 
-                connection.Open();
+                
                 string commandoSQL = @"   
                  CREATE TABLE IF NOT EXISTS Pessoas(
                  Id INTEGER PRIMARY KEY AUTOINCREMENT,
@@ -23,9 +23,12 @@ namespace Estudante
                  Idade INTERGER NOT NULL,
                  Nome STRING NOT NULL
                 );";
-            }
 
+            connection.Execute(commandoSQL);
         }
-    }
 
+        
+    }
 }
+
+
